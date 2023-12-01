@@ -13,23 +13,24 @@ console.log(buffer1)
 console.log(buffer2)
 console.log(buffer3)
 
-// 这里解释一下buffer的内容。在计算机里，一个字节占8位，buffer就是一个字节一个字节的内容，它用两个16进制数来表示一个字节。如果用2进制，则需要写成 00000001 这不容易阅读。
-// 举个例子 geekbang是8个字节，所以他的buffer内容就是8组 2位的16进制数。其中的g的ASCII码是 103， 它对应的二进制为 0110 0111，转为16进制就是 67
+// 读取
 
-{
-  /* <Buffer 67 65 65 6b 62 61 6e 67>
-<Buffer 01 02 03 04>
-<Buffer 00 00 00 00 00 00 00 00 00 00> */
-}
+// const buf = Buffer.from(JSON.stringify([1, 5]))
+// console.log(buf)
+// console.log(buf.readUInt16BE(0))
 
-// 因为Buffer继承自Uint8Array，所以可以直接使用Uint8Array的方法
-console.log(Buffer.from([103])) // <Buffer 67>
-console.log(Uint8Array.from([103]).buffer) // ArrayBuffer { [Uint8Contents]: <67>, byteLength: 1 }
-console.log(Uint16Array.from([256, 1, 2]).buffer)
+// const buf = Buffer.from([0x12, 0x22, 0x33, 0x44])
 
-const buf = Buffer.allocUnsafe(4)
+// console.log(buf)
+// console.log('十进制：', buf.readUInt16LE(0))
+// console.log('十六进制：', buf.readUInt16LE(0).toString(16))
 
-buf.writeInt16LE(0x0304, 2)
+// console.log('十进制：', buf.readUInt16LE(1))
+// console.log('十六进制：', buf.readUInt16LE(1).toString(16))
 
+const buf = Buffer.alloc(10)
+
+buf.writeUInt16LE(258, 0) // 写入两个字节
+buf.writeUInt16LE(259, 4) // 写入两个字节
 console.log(buf)
-// Prints: <Buffer 04 03>
+console.log(buf.subarray(0, 5))
