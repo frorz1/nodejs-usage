@@ -33,7 +33,7 @@ Buffer.from(string[,encoding])
 
 buf.toString([encoding[, start[,end]]])
 
-encoding是用来指定string参数的格式的，默认按string是 utf-8 格式处理
+encoding是用来指定string参数的格式的，默认按string是 utf8 格式处理
 ## 对象数据
 ```js
 
@@ -43,7 +43,7 @@ const data = JSON.parse(buffer.toString())
 // { name: 'fet' }
 ```
 
-## base64转utf-8
+## base64转utf8
 ```js
 // 这里指定了string参数编码方式为base64
 // Buffer.from会将base64解码成utf-8格式的。等同于js里面的window.atob(base64)
@@ -153,6 +153,15 @@ console.log(buf.subarray(0, 5))
 
 # 写入
 在一定长度的buffer内可以随意写入不同位的有符号或无符号整数，有时候需要跟不同的服务端约定buffer的写入规则，所以可能会用到BE和LE，这个需要了解。
+
+## alloc
+Buffer.alloc(10)
+
+```js
+// Creates a Buffer of length 10,
+// filled with bytes which all have the value `1`.
+const buf = Buffer.alloc(10, 1);
+```
 
 如果不指定偏移量，则会直接覆盖相应的位置
 ## writeUInt16BE

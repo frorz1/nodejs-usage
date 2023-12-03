@@ -31,6 +31,6 @@ console.log(buffer3)
 const buf = Buffer.alloc(10)
 
 buf.writeUInt16LE(258, 0) // 写入两个字节
-buf.writeUInt16LE(259, 4) // 写入两个字节
-console.log(buf)
-console.log(buf.subarray(0, 5))
+// buf.writeUInt16LE(259, 4) // 写入两个字节
+// console.log(buf.subarray(0, 5))
+console.log(buf.length)
