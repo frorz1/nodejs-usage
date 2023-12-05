@@ -9,4 +9,15 @@
 <body>
   这是一个服务端渲染的页面
 </body>
+<script>
+</script>
+<script>
+    console.log(window.fn(2, 3)) // Uncaught TypeError: window.fn is not a function
+    let a = 10
+    
+      function fn (a, b) { return a + b }
+    
+    let b = 1
+    console.log(window.fn(2, 3)) // 5
+</script>
 </html>
