@@ -42,7 +42,10 @@ module.exports.clientUtils = {
 
     // 读取header中的body.length。 这个长度是4字节，所以我们读取32位
     const bodyLength = buffer.readInt32BE(2)
-    return 6 + bodyLength
+    if (buffer.length > bodyLength + 6) {
+      return bodyLength + 6
+    }
+    return 0
   },
 }
 
@@ -82,6 +85,9 @@ module.exports.serverUtils = {
     }
     const bodyLength = buffer.readInt32BE(2)
 
-    return 6 + bodyLength
+    if (buffer.length > bodyLength + 6) {
+      return bodyLength + 6
+    }
+    return 0
   },
 }

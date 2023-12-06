@@ -3,35 +3,65 @@ const mount = require('koa-mount')
 const fs = require('node:fs')
 const static = require('koa-static')
 const app = new Koa()
+const createTemplate = require('./template')
+const client = require('./client')
 
-// 指定静态服务器的目录，这样html中引用静态资源时 './static/xxx.css' 就会去source目录下找
-app.use(static(__dirname + '/source'))
+const detailTemplate = createTemplate(__dirname + '/template/detail.html')
+
+// 指定静态服务器的目录，这种形式访问时， html,css,js等都会自动去source目录下找
+// 访问时跟路径时（http://localhost:3000/），会直接返回source下的index.html
+// app.use(static(__dirname + '/source/'))
+
+// 这种只针对/static 的静态资源
+app.use(mount('/static', static(__dirname + '/source/static/')))
 
 // 先声明一个应用，完成中间件后，再去mount，否则中间件会应用不上
 const detailApp = new Koa()
-detailApp.use(async (ctx, next) => {
-  ctx.status = 200
-  res = await next()
-  ctx.body = res
-})
+// 指定静态服务器的目录，只有/static的资源才会去/source/static/下找
+detailApp.use(mount('/static', static(__dirname + '/source/static/')))
 
 detailApp.use(async (ctx, next) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve('hello wrold')
-    }, 1000)
+  const id = ctx.query.columnid
+  console.log('idsssss: ', id)
+
+  if (!ctx.query.columnid) {
+    ctx.status = 400
+    ctx.body = 'invalid columnid'
+    return
+  }
+
+  // try {
+  const result = await new Promise((resolve, reject) => {
+    client.write(
+      {
+        columnid: id,
+      },
+      (err, data) => {
+        console.log('err', err)
+        err ? reject(err) : resolve(data)
+      },
+    )
   })
+  ctx.status = 200
+  ctx.body = detailTemplate(result)
+
+  // } catch (error) {
+  //   ctx.status = 500
+  //   ctx.body = error
+  // }
+  // ctx.status = 200
+  // ctx.body = 111
 })
 
-app.use(
-  mount('/favicon.ico', (ctx) => {
-    ctx.status === 200
-  }),
-)
+// app.use(
+//   mount('/favicon.ico', (ctx) => {
+//     ctx.status === 200
+//   }),
+// )
 
 app.use(mount('/detail', detailApp))
 
-// 跟目录要放到最后，因为所有目录都可以匹配到 /
+// // 跟目录要放到最后，因为所有目录都可以匹配到 /
 app.use(
   mount('/', async (ctx, next) => {
     // fs.readFileSync(__dirname + '/source/index.html') 直接读是流的形式，会触发浏览器的下载。所以需要用文本形式
@@ -39,6 +69,6 @@ app.use(
   }),
 )
 
-app.listen(4000, () => {
-  console.log('server is running on port 4000')
+app.listen(3000, () => {
+  console.log('server is running on port 3000')
 })

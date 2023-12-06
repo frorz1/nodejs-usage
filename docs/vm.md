@@ -267,3 +267,31 @@ console.log(render())
 // output: 
 // <h1>test</h1><div><p>this is content</p></div>
 ```
+
+## 使用html
+
+模版也可以直接使用html， 我们直接往需要的地方插值即可。如：
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>page title is ${data.title}</div>
+  <div>page content is ${data.content}</div>
+</body>
+</html>
+```
+
+只不过模板读取的地方需要写成如下这样，将读出来的内容放到ES6的模版字符串``中
+
+```js
+`(function () {
+    return \`${fs.readFileSync(templatePath, 'utf-8')}\`
+})`
+```

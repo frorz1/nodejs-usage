@@ -54,17 +54,19 @@ const getId = () => {
   return ids[Math.floor(Math.random() * ids.length)]
 }
 
-const buffer = Buffer.alloc(4)
-buffer.writeInt16BE(id)
-client.write(buffer)
-
-client.on('data', (data) => {
-  console.log(data.toString())
-  // 再次发送
+const sendRequest = (id) => {
   const buffer = Buffer.alloc(4)
   buffer.writeInt16BE(id)
   client.write(buffer)
+}
+
+sendRequest(getId())
+
+client.on('data', (data) => {
+  console.log(data.toString())
+  sendRequest(getId())
 })
+
 ```
 
 服务端返回了数据才能进行下一次请求
@@ -256,7 +258,10 @@ module.exports.clientUtils = {
 
     // 读取header中的body.length。 这个长度是4字节，所以我们读取32位
     const bodyLength = buffer.readInt32BE(2)
-    return 6 + bodyLength
+    if (buffer.length > bodyLength + 6) {
+      return bodyLength + 6
+    }
+    return 0
   },
 }
 
@@ -295,8 +300,10 @@ module.exports.serverUtils = {
       return 0
     }
     const bodyLength = buffer.readInt32BE(2)
-
-    return 6 + bodyLength
+    if (buffer.length > bodyLength + 6) {
+      return bodyLength + 6
+    }
+    return 0
   },
 }
 

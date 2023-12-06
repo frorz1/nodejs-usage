@@ -86,7 +86,7 @@ console.log(buf.readUInt8(0))
 ## readUint16BE
 readUint16BE[offset]
 
-BE的意思就是从头往尾部读 -> ，所以这个方法的意思就是 从offset处，读取后面两个字节，顺序是 ->
+BE的意思就是大端次序（Big endian），从头往尾部读 -> ，所以这个方法的意思就是 从offset处，读取后面两个字节，顺序是 ->
 
 offset: 开始读取前需要跳过的字节，0 <= offset <= buf.length - 2 因为一次读2个字节，所以跳过的字节数不能大于buf.length - 2，否则剩余字节不够读。默认0
 return: integer
@@ -105,7 +105,7 @@ console.log(buf.readUInt16BE(0))
 ## readUint16LE
 readUint16LE[offset]
 
-LE的意思就是从尾往头部读 <- ，所以这个方法的意思就是 从offset处，读取后面两个字节，顺序是 <-
+LE的意思就是小端次序（Little endian）从尾往头部读 <- ，所以这个方法的意思就是 从offset处，读取后面两个字节，顺序是 <-
 
 offset: 开始读取前需要跳过的字节，0 <= offset <= buf.length - 2 因为一次读2个字节，所以跳过的字节数不能大于buf.length - 2，否则剩余字节不够读。默认0
 return: integer
