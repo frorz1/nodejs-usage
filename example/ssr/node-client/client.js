@@ -2,36 +2,36 @@ const net = require('node:net')
 const fs = require('node:fs')
 const socket = new net.Socket()
 const protobuf = require('protocol-buffers')
+const RpcClient = require('./lib/rpc-client')
 
-const schemas = protobuf(fs.readFileSync(__dirname + '/detail.proto'))
-socket.connect({
+const client = new RpcClient({
   port: 4000,
   host: '127.0.0.1',
   keepAlive: true,
+  timeout: 500,
 })
-
-let listening = false
-
-const helper = {
-  seq: 0,
-  encode: (data, seq) => {
-    const body = schemas.ColumnRequest.encode(data)
+// 模拟easy_sock
+module.exports = function (protobufRequestSchema, protobufResponseSchema) {
+  client.encode = (data, seq) => {
+    const body = protobufRequestSchema.encode(data)
 
     const header = Buffer.alloc(8)
-    header.writeInt32BE(seq)
-    header.writeInt32BE(body.length, 4)
+    header.writeUint32BE(seq)
+    header.writeUint32BE(body.length)
 
     return Buffer.concat([header, body])
-  },
-  decode: (buffer) => {
-    const seq = buffer.readInt32BE()
-    const body = schemas.ColumnResponse.decode(buffer.slice(8))
+  }
+
+  client.decode = (buffer) => {
+    const seq = buffer.readUint32BE()
+    const body = protobufResponseSchema.decode(buffer.subarray(8))
     return {
       seq,
       result: body,
     }
-  },
-  isReceiveComplete: (buffer) => {
+  }
+
+  client.isReceiveComplete = (buffer) => {
     if (buffer.length < 8) {
       return 0
     }
@@ -42,23 +42,6 @@ const helper = {
     } else {
       return 0
     }
-  },
-  write: (data, callback) => {
-    const reqBuffer = helper.encode(data, helper.seq)
-    helper.seq++
-    console.log('req: ', reqBuffer)
-    socket.on('data', (buffer) => {
-      // 解数据
-      const { result } = helper.decode(buffer)
-      callback(null, result)
-    })
-    socket.write(reqBuffer, (err) => {
-      if (err) {
-        callback(err)
-      }
-    })
-  },
+  }
+  return client
 }
-
-// 模拟easy_sock
-module.exports = helper

@@ -9,8 +9,8 @@ dependencies:
     specifier: ^3.0.2
     version: 3.0.2
   protocol-buffers:
-    specifier: ^5.0.0
-    version: 5.0.0
+    specifier: ^4.2.0
+    version: 4.2.0
 
 packages:
 
@@ -219,8 +219,8 @@ packages:
     resolution: {integrity: sha512-TdDRD+/QNdrCGCE7v8340QyuXd4kIWIgapsE2+n/SaGiSSbomYl4TjHlvIoCWRpE7wFt02EpB35VVA2ImcBVqw==}
     dev: false
 
-  /protocol-buffers@5.0.0:
-    resolution: {integrity: sha512-ceZAqqc5tKmsy4VXjQpCUbw9CJWHY+wIJitciBB9wyFXmcma8124Ck6LYwKncZgUzTkyCa+IyDrphI8s8DIWbA==}
+  /protocol-buffers@4.2.0:
+    resolution: {integrity: sha512-hNp56d5uuREVde7UqP+dmBkwzxrhJwYU5nL/mdivyFfkRZdgAgojkyBeU3jKo7ZHrjdSx6Q1CwUmYJI6INt20g==}
     hasBin: true
     dependencies:
       generate-function: 2.3.1
@@ -228,7 +228,7 @@ packages:
       protocol-buffers-encodings: 1.2.0
       protocol-buffers-schema: 3.6.0
       signed-varint: 2.0.1
-      varint: 6.0.0
+      varint: 5.0.2
     dev: false
 
   /pstree.remy@1.1.8:
@@ -294,10 +294,6 @@ packages:
 
   /varint@5.0.2:
     resolution: {integrity: sha512-lKxKYG6H03yCZUpAGOPOsMcGxd1RHCu1iKvEHYDPmTyq2HueGhD73ssNBqqQWfvYs04G9iUFRvmAVLW20Jw6ow==}
-    dev: false
-
-  /varint@6.0.0:
-    resolution: {integrity: sha512-cXEIW6cfr15lFv563k4GuVuW/fiwjknytD37jIOLSdSWuOI6WnO/oKwmP2FQTU2l01LP8/M5TSAJpzUaGe3uWg==}
     dev: false
 
   /yallist@4.0.0:

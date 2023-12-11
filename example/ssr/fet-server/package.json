@@ -1,17 +1,16 @@
 {
-  "name": "server",
+  "name": "detail-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "entry.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "detail": "nodemon ./detail/index.js"
+    "detail": "nodemon detail/index.js"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "nodemon": "^3.0.2",
-    "protocol-buffers": "^5.0.0"
+    "protocol-buffers": "^4.2.0"
   }
 }

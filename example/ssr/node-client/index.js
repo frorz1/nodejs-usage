@@ -2,9 +2,16 @@ const Koa = require('koa')
 const mount = require('koa-mount')
 const fs = require('node:fs')
 const static = require('koa-static')
-const app = new Koa()
 const createTemplate = require('./template')
-const client = require('./client')
+const protobuf = require('protocol-buffers')
+const tcpClientServer = require('./client')
+const schemas = protobuf(fs.readFileSync(__dirname + '/detail/detail.proto'))
+
+const detailClient = tcpClientServer(
+  schemas.ColumnRequest,
+  schemas.ColumnResponse,
+)
+const app = new Koa()
 
 const detailTemplate = createTemplate(__dirname + '/template/detail.html')
 
@@ -32,7 +39,7 @@ detailApp.use(async (ctx, next) => {
 
   // try {
   const result = await new Promise((resolve, reject) => {
-    client.write(
+    detailClient.write(
       {
         columnid: id,
       },
@@ -44,13 +51,7 @@ detailApp.use(async (ctx, next) => {
   })
   ctx.status = 200
   ctx.body = detailTemplate(result)
-
-  // } catch (error) {
-  //   ctx.status = 500
-  //   ctx.body = error
-  // }
-  // ctx.status = 200
-  // ctx.body = 111
+  await next()
 })
 
 // app.use(
@@ -62,12 +63,12 @@ detailApp.use(async (ctx, next) => {
 app.use(mount('/detail', detailApp))
 
 // // 跟目录要放到最后，因为所有目录都可以匹配到 /
-app.use(
-  mount('/', async (ctx, next) => {
-    // fs.readFileSync(__dirname + '/source/index.html') 直接读是流的形式，会触发浏览器的下载。所以需要用文本形式
-    ctx.body = fs.readFileSync(__dirname + '/source/index.html', 'utf-8')
-  }),
-)
+// app.use(
+//   mount('/', async (ctx, next) => {
+//     // fs.readFileSync(__dirname + '/template/download.html') 直接读是流的形式，会触发浏览器的下载。所以需要用文本形式
+//     ctx.body = fs.readFileSync(__dirname + '/template/download.html', 'utf-8')
+//   }),
+// )
 
 app.listen(3000, () => {
   console.log('server is running on port 3000')

@@ -1,0 +1,70 @@
+lockfileVersion: '6.1'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+dependencies:
+  protocol-buffers:
+    specifier: ^4.2.0
+    version: 4.2.0
+
+packages:
+
+  /b4a@1.6.4:
+    resolution: {integrity: sha512-fpWrvyVHEKyeEvbKZTVOeZF3VSKKWtJxFIxX/jaVPf+cLbGUSitjb49pHLqPV2BUNNZ0LcoeEGfE/YCpyDYHIw==}
+    dev: false
+
+  /generate-function@2.3.1:
+    resolution: {integrity: sha512-eeB5GfMNeevm/GRYq20ShmsaGcmI81kIX2K9XQx5miC8KdHaC6Jm0qQ8ZNeGOi7wYB8OsdxKs+Y2oVuTFuVwKQ==}
+    dependencies:
+      is-property: 1.0.2
+    dev: false
+
+  /generate-object-property@1.2.0:
+    resolution: {integrity: sha1-nA4cQDCM6AT0eDYYuTf6iPmdUNA=}
+    dependencies:
+      is-property: 1.0.2
+    dev: false
+
+  /is-property@1.0.2:
+    resolution: {integrity: sha1-V/4cTkhHTt1lsJkR8msc1Ald2oQ=}
+    dev: false
+
+  /protocol-buffers-encodings@1.2.0:
+    resolution: {integrity: sha512-daeNPuKh1NlLD1uDfbLpD+xyUTc07nEtfHwmBZmt/vH0B7VOM+JOCOpDcx9ZRpqHjAiIkGqyTDi+wfGSl17R9w==}
+    dependencies:
+      b4a: 1.6.4
+      signed-varint: 2.0.1
+      varint: 5.0.0
+    dev: false
+
+  /protocol-buffers-schema@3.6.0:
+    resolution: {integrity: sha512-TdDRD+/QNdrCGCE7v8340QyuXd4kIWIgapsE2+n/SaGiSSbomYl4TjHlvIoCWRpE7wFt02EpB35VVA2ImcBVqw==}
+    dev: false
+
+  /protocol-buffers@4.2.0:
+    resolution: {integrity: sha512-hNp56d5uuREVde7UqP+dmBkwzxrhJwYU5nL/mdivyFfkRZdgAgojkyBeU3jKo7ZHrjdSx6Q1CwUmYJI6INt20g==}
+    hasBin: true
+    dependencies:
+      generate-function: 2.3.1
+      generate-object-property: 1.2.0
+      protocol-buffers-encodings: 1.2.0
+      protocol-buffers-schema: 3.6.0
+      signed-varint: 2.0.1
+      varint: 5.0.2
+    dev: false
+
+  /signed-varint@2.0.1:
+    resolution: {integrity: sha1-UKmYnafJjCxh2tEZvJdHDvhSgSk=}
+    dependencies:
+      varint: 5.0.2
+    dev: false
+
+  /varint@5.0.0:
+    resolution: {integrity: sha1-2Ca4n3SQcy+rwMDtaT7Uddyynr8=}
+    dev: false
+
+  /varint@5.0.2:
+    resolution: {integrity: sha512-lKxKYG6H03yCZUpAGOPOsMcGxd1RHCu1iKvEHYDPmTyq2HueGhD73ssNBqqQWfvYs04G9iUFRvmAVLW20Jw6ow==}
+    dev: false
